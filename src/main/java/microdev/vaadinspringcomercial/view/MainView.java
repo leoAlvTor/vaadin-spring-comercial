@@ -6,16 +6,17 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
-import microdev.vaadinspringcomercial.controller.UserController;
-import microdev.vaadinspringcomercial.model.UserModel;
+import microdev.vaadinspringcomercial.repository.ProdTemRepository;
 
 @Route("/main_view")
 @PageTitle("Factura")
 public class MainView extends Div implements BeforeEnterObserver {
 
     private final VaadinSession session;
+    private ProdTemRepository prodTemRepository;
 
-    public MainView(){
+    public MainView(ProdTemRepository prodTemRepository){
+        this.prodTemRepository = prodTemRepository;
         session = VaadinSession.getCurrent();
         addTab();
     }
@@ -29,11 +30,7 @@ public class MainView extends Div implements BeforeEnterObserver {
 
         TabSheet tabSheet = new TabSheet();
         tabSheet.add("Facturacion",
-                new LazyComponent(FacturacionView::new));
-        tabSheet.add("Bye",
-                new LazyComponent(()-> new Text("Adios")));
-        tabSheet.add("Italian Hello",
-                new LazyComponent(()-> new Text("ciao")));
+                new LazyComponent(()->new FacturacionView(this.prodTemRepository)));
 
         add(tabSheet);
     }
