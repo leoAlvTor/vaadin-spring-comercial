@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,8 +24,9 @@ public class TaxModel {
     private String nombre;
     private String detalle;
     private Integer codigo;
-    @OneToOne(mappedBy = "impuesto")
-    private ProductModel productModel;
+    @OneToMany(mappedBy = "impuesto")
+    @ToString.Exclude
+    private List<ProductModel> productModelList;
 
 
 }
